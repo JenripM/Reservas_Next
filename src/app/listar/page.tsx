@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 interface Reserva {
   id: number;
   clientName: string;
+  partySize: number;
   status: string;
   date: string; // Fecha en formato ISO
 }
@@ -131,6 +132,9 @@ export default function ListarReservas() {
             </p>
             <p>
               <strong>Cliente:</strong> {detallesReserva.clientName}
+            </p>
+            <p>
+              <strong>Cantidad de Personas:</strong> {detallesReserva.partySize}
             </p>
             <p>
               <strong>Fecha:</strong> {new Date(detallesReserva.date).toLocaleDateString("es-PE")}
