@@ -12,12 +12,11 @@ export default function Home() {
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    // Validar credenciales
     if (email === "admin@gmail.com" && password === "admin") {
-      setError(""); // Limpiar error previo
+      setError(""); 
       console.log("Acceso permitido");
-      sessionStorage.setItem("user", email); // Guardar el email del usuario en sessionStorage
-      router.push("/dashboard"); // Redirigir al dashboard
+      sessionStorage.setItem("user", email); 
+      router.push("/dashboard"); 
     } else {
       setError("Correo o contraseña incorrectos.");
     }

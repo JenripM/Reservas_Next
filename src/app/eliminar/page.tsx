@@ -19,7 +19,6 @@ export default function DeleteReservationPage() {
 
   const router = useRouter();
 
-  // Fetch all reservations
   useEffect(() => {
     async function fetchReservations() {
       try {
@@ -34,7 +33,6 @@ export default function DeleteReservationPage() {
     fetchReservations();
   }, []);
 
-  // Handle delete action
   const handleDelete = async (reservationId: number) => {
     setIsDeleting(true);
     try {
@@ -45,7 +43,7 @@ export default function DeleteReservationPage() {
       if (response.ok) {
         setReservations((prev) => prev.filter((reservation) => reservation.id !== reservationId));
         alert("Reserva eliminada correctamente");
-        router.push("/listar"); // Redirige al listado de reservas
+        router.push("/listar");
       } else {
         alert("Error al eliminar la reserva");
       }
@@ -54,7 +52,7 @@ export default function DeleteReservationPage() {
       alert("Error al eliminar la reserva");
     } finally {
       setIsDeleting(false);
-      setConfirmation(false); // Cierra el cuadro de confirmación
+      setConfirmation(false);
     }
   };
 
@@ -62,7 +60,6 @@ export default function DeleteReservationPage() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-100 to-gray-200 p-6">
       <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Eliminar Reserva</h1>
 
-      {/* Mostrar lista de reservas */}
       <div className="w-full max-w-3xl mb-8">
         <h2 className="text-2xl font-semibold text-gray-700 mb-6 text-center">Reservas Disponibles</h2>
         <ul className="space-y-4">
@@ -76,7 +73,6 @@ export default function DeleteReservationPage() {
                 <p className="text-sm text-gray-600">{reservation.date}</p>
               </div>
 
-              {/* Botón para eliminar */}
               <button
                 onClick={() => {
                   setSelectedReservationId(reservation.id);
@@ -91,7 +87,6 @@ export default function DeleteReservationPage() {
         </ul>
       </div>
 
-      {/* Confirmación de eliminación */}
       {confirmation && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
