@@ -17,7 +17,6 @@ export default function ReservationPage() {
   const [selectedReservationId, setSelectedReservationId] = useState<number | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string>("");
 
-  // Fetch all reservations
   useEffect(() => {
     async function fetchReservations() {
       try {
@@ -32,7 +31,6 @@ export default function ReservationPage() {
     fetchReservations();
   }, []);
 
-  // Handle status change
   const handleStatusChange = async () => {
     if (!selectedReservationId || !selectedStatus) {
       return;
@@ -64,7 +62,6 @@ export default function ReservationPage() {
         Modificar Estado de Reserva
       </h1>
 
-      {/* Mostrar lista de reservas */}
       <div className="mb-8 max-w-3xl mx-auto">
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">Reservas</h2>
         <select
@@ -81,7 +78,6 @@ export default function ReservationPage() {
         </select>
       </div>
           
-      {/* Mostrar opciones de estado solo si se selecciona una reserva */}
       {selectedReservationId && (
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
           <h2 className="text-xl font-medium text-gray-800 mb-6">

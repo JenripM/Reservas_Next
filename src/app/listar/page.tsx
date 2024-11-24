@@ -3,17 +3,16 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-// Definir tipos para las reservas y detalles
 interface Reserva {
   id: number;
   clientName: string;
   partySize: number;
   status: string;
-  date: string; // Fecha en formato ISO
+  date: string; 
 }
 
 interface DetallesReserva extends Reserva {
-  additionalInfo?: string; // Puedes agregar más campos si es necesario
+  additionalInfo?: string; 
 }
 
 export default function ListarReservas() {
@@ -25,7 +24,6 @@ export default function ListarReservas() {
   const [filtroEstado, setFiltroEstado] = useState<string>("todas");
 
   useEffect(() => {
-    // Realizar la llamada a la API para obtener las reservas
     const fetchReservas = async () => {
       try {
         const response = await fetch("/api/reservas");
@@ -34,7 +32,7 @@ export default function ListarReservas() {
           throw new Error("No se pudo obtener las reservas");
         }
 
-        const data: Reserva[] = await response.json(); // Definir el tipo de respuesta
+        const data: Reserva[] = await response.json(); 
         setReservas(data);
         setLoading(false);
       } catch (error) {
@@ -60,7 +58,7 @@ export default function ListarReservas() {
         throw new Error("No se pudo obtener los detalles de la reserva");
       }
 
-      const data: DetallesReserva = await response.json(); // Definir el tipo de respuesta
+      const data: DetallesReserva = await response.json();
       setDetallesId(id);
       setDetallesReserva(data);
     } catch (error) {

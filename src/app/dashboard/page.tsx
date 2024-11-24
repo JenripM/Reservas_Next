@@ -4,16 +4,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
-  const [user, setUser] = useState<string | null>(null); // Aceptar tanto string como null
+  const [user, setUser] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    // Verificar si el usuario está logueado
     const loggedInUser = sessionStorage.getItem("user");
     if (!loggedInUser) {
-      router.push("/"); // Redirigir al login si no está autenticado
+      router.push("/"); 
     } else {
-      setUser(loggedInUser); // Asignar a user el valor almacenado
+      setUser(loggedInUser); 
     }
   }, [router]);
 
@@ -25,8 +24,8 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <button
             onClick={() => {
-              sessionStorage.removeItem("user"); // Eliminar sesión al hacer logout
-              router.push("/"); // Redirigir al login
+              sessionStorage.removeItem("user"); 
+              router.push("/"); 
             }}
             className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
           >
@@ -44,14 +43,12 @@ export default function Dashboard() {
 
         
 
-        {/* Contenido principal */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Card 1 */}
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold text-gray-800">Registrar Reservas</h3>
             <p className="mt-2 text-gray-600">Administrar productos y servicios disponibles.</p>
             <button 
-            onClick={() => router.push('/registrar')} // Redirigir a '/listar' cuando se hace click
+            onClick={() => router.push('/registrar')} 
 
             className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">
               Ver detalles
@@ -62,7 +59,7 @@ export default function Dashboard() {
             <h3 className="text-xl font-semibold text-gray-800">Listar Reservas</h3>
             <p className="mt-2 text-gray-600">Ver listado de reservas</p>
             <button
-              onClick={() => router.push('/listar')} // Redirigir a '/listar' cuando se hace click
+              onClick={() => router.push('/listar')} 
               className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
             >
               Ver detalles
@@ -70,7 +67,6 @@ export default function Dashboard() {
           </div>
 
 
-          {/* Card 3 */}
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold text-gray-800">Modificar Reserva</h3>
             <p className="mt-2 text-gray-600">Modifica todo los campos de la reserva</p>

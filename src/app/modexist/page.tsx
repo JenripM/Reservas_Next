@@ -20,7 +20,6 @@ export default function ReservationPage() {
   const [partySize, setPartySize] = useState<number | string>("");
   const [date, setDate] = useState<string>("");
 
-  // Fetch all reservations
   useEffect(() => {
     async function fetchReservations() {
       try {
@@ -35,7 +34,6 @@ export default function ReservationPage() {
     fetchReservations();
   }, []);
 
-  // Handle reservation data change
   const handleReservationChange = async () => {
     if (!selectedReservationId || !selectedStatus || !clientName || !partySize || !date) {
       return;
@@ -61,7 +59,7 @@ export default function ReservationPage() {
           reservation.id === updatedReservation.id ? updatedReservation : reservation
         )
       );
-      setSelectedReservationId(null); // Clear the selection after update
+      setSelectedReservationId(null);
     } catch (error) {
       console.error("Error updating reservation:", error);
     }
@@ -73,7 +71,6 @@ export default function ReservationPage() {
         Modificar Reserva
       </h1>
 
-      {/* Lista de reservas */}
       <div className="mb-8 w-full max-w-md">
         <h2 className="text-xl font-semibold text-gray-700 mb-4">Selecciona una Reserva</h2>
         <select
@@ -101,7 +98,6 @@ export default function ReservationPage() {
         </select>
       </div>
 
-      {/* Formulario de edición */}
       {selectedReservationId && (
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
           <h2 className="text-xl font-semibold text-gray-800 mb-6">
