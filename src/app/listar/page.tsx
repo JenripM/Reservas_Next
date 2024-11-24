@@ -67,10 +67,12 @@ export default function ListarReservas() {
   };
 
   // Filtrar las reservas según el estado
-  const reservasFiltradas = reservas.filter((reserva) => {
+  const reservasFiltradas = reservas
+  .filter((reserva) => {
     if (filtroEstado === "todas") return true;
     return reserva.status.toLowerCase() === filtroEstado.toLowerCase();
-  });
+  })
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   if (loading) {
     return (
