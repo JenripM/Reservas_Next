@@ -39,7 +39,7 @@ export default function Home() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 mt-2 text-sm border rounded-md focus:outline-none focus:ring focus:ring-purple-500"
-              placeholder="tuemail@ejemplo.com"
+              placeholder="tuemailf@ejemplo.com"
               required
             />
           </div>
