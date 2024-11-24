@@ -2,10 +2,9 @@ import { NextResponse } from "next/server";
 import { prisma } from '@/libs/prisma';
 import { Prisma } from "@prisma/client";
 
-// GET: Obtener una reserva por ID
 export async function GET(request: Request) {
-  const url = new URL(request.url); // Obtener la URL completa
-  const id = url.pathname.split('/').pop(); // Obtener el último segmento de la URL, que es el ID
+  const url = new URL(request.url); 
+  const id = url.pathname.split('/').pop(); 
 
   if (!id) {
     return NextResponse.json({ message: "ID es requerido" }, { status: 400 });
@@ -14,7 +13,7 @@ export async function GET(request: Request) {
   try {
     const reserva = await prisma.reservation.findFirst({
       where: {
-        id: Number(id), // Convertimos el ID a número
+        id: Number(id), 
       },
     });
 
@@ -29,11 +28,9 @@ export async function GET(request: Request) {
   }
 }
 
-// DELETE: Eliminar una reserva por ID
 export async function DELETE(request: Request) {
-  const url = new URL(request.url); // Obtener la URL completa
-  const id = url.pathname.split('/').pop(); // Obtener el último segmento de la URL, que es el ID
-
+  const url = new URL(request.url); 
+  const id = url.pathname.split('/').pop(); 
   if (!id) {
     return NextResponse.json({ message: "ID es requerido" }, { status: 400 });
   }
@@ -60,10 +57,9 @@ export async function DELETE(request: Request) {
   }
 }
 
-// PUT: Actualizar una reserva por ID
 export async function PUT(request: Request) {
-  const url = new URL(request.url); // Obtener la URL completa
-  const id = url.pathname.split('/').pop(); // Obtener el último segmento de la URL, que es el ID
+  const url = new URL(request.url); 
+  const id = url.pathname.split('/').pop(); 
 
   if (!id) {
     return NextResponse.json({ message: "ID es requerido" }, { status: 400 });
@@ -91,7 +87,7 @@ export async function PUT(request: Request) {
 
     if (clientName) updateData.clientName = clientName;
     if (partySize) updateData.partySize = partySize;
-    if (date) updateData.date = new Date(date); // Convertir la fecha en un objeto Date
+    if (date) updateData.date = new Date(date); 
     if (status) updateData.status = status;
 
     const updatedReservation = await prisma.reservation.update({
