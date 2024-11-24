@@ -3,8 +3,13 @@ import { prisma } from '@/libs/prisma';
 import { Prisma } from "@prisma/client";
 
 // GET: Obtener una reserva por ID
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const { id } = params; // Accedemos al parámetro 'id' directamente de 'params'
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url); // Obtener los parámetros de la URL
+  const id = searchParams.get('id'); // Asumiendo que el parámetro ID está en la URL
+
+  if (!id) {
+    return NextResponse.json({ message: "ID es requerido" }, { status: 400 });
+  }
 
   try {
     const reserva = await prisma.reservation.findFirst({
@@ -29,11 +34,18 @@ export async function GET(request: Request, { params }: { params: { id: string }
 }
 
 // DELETE: Eliminar una reserva por ID
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url); // Obtener los parámetros de la URL
+  const id = searchParams.get('id'); // Asumiendo que el parámetro ID está en la URL
+
+  if (!id) {
+    return NextResponse.json({ message: "ID es requerido" }, { status: 400 });
+  }
+
   try {
     const deletedReserva = await prisma.reservation.delete({
       where: {
-        id: Number(params.id),
+        id: Number(id),
       },
     });
 
@@ -57,7 +69,14 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 }
 
 // PUT: Actualizar una reserva por ID
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request) {
+  const { searchParams } = new URL(request.url); // Obtener los parámetros de la URL
+  const id = searchParams.get('id'); // Asumiendo que el parámetro ID está en la URL
+
+  if (!id) {
+    return NextResponse.json({ message: "ID es requerido" }, { status: 400 });
+  }
+
   try {
     const { clientName, partySize, date, status } = await request.json();
 
@@ -84,7 +103,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     if (status) updateData.status = status;
 
     const updatedReservation = await prisma.reservation.update({
-      where: { id: Number(params.id) },
+      where: { id: Number(id) },
       data: updateData,
     });
 
