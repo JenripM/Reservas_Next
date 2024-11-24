@@ -3,7 +3,7 @@ import { prisma } from '@/libs/prisma';
 import { Prisma } from "@prisma/client";
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+  const { id } = params; // Accedemos al parámetro 'id' directamente de 'params'
 
   try {
     const reserva = await prisma.reservation.findFirst({
