@@ -4,8 +4,8 @@ import { Prisma } from "@prisma/client";
 
 // GET: Obtener una reserva por ID
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url); // Obtener los parámetros de la URL
-  const id = searchParams.get('id'); // Asumiendo que el parámetro ID está en la URL
+  const url = new URL(request.url); // Obtener la URL completa
+  const id = url.pathname.split('/').pop(); // Obtener el último segmento de la URL, que es el ID
 
   if (!id) {
     return NextResponse.json({ message: "ID es requerido" }, { status: 400 });
@@ -24,19 +24,15 @@ export async function GET(request: Request) {
 
     return NextResponse.json(reserva);
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json(
-        { message: error.message },
-        { status: 500 }
-      );
-    }
+    console.error(error);
+    return NextResponse.json({ message: "Error inesperado al obtener la reserva" }, { status: 500 });
   }
 }
 
 // DELETE: Eliminar una reserva por ID
 export async function DELETE(request: Request) {
-  const { searchParams } = new URL(request.url); // Obtener los parámetros de la URL
-  const id = searchParams.get('id'); // Asumiendo que el parámetro ID está en la URL
+  const url = new URL(request.url); // Obtener la URL completa
+  const id = url.pathname.split('/').pop(); // Obtener el último segmento de la URL, que es el ID
 
   if (!id) {
     return NextResponse.json({ message: "ID es requerido" }, { status: 400 });
@@ -49,10 +45,6 @@ export async function DELETE(request: Request) {
       },
     });
 
-    if (!deletedReserva) {
-      return NextResponse.json({ message: "Reserva no encontrada" }, { status: 404 });
-    }
-
     return NextResponse.json(deletedReserva);
   } catch (error) {
     console.error(error);
@@ -64,14 +56,14 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ message: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ message: "Error inesperado" }, { status: 500 });
+    return NextResponse.json({ message: "Error inesperado al eliminar la reserva" }, { status: 500 });
   }
 }
 
 // PUT: Actualizar una reserva por ID
 export async function PUT(request: Request) {
-  const { searchParams } = new URL(request.url); // Obtener los parámetros de la URL
-  const id = searchParams.get('id'); // Asumiendo que el parámetro ID está en la URL
+  const url = new URL(request.url); // Obtener la URL completa
+  const id = url.pathname.split('/').pop(); // Obtener el último segmento de la URL, que es el ID
 
   if (!id) {
     return NextResponse.json({ message: "ID es requerido" }, { status: 400 });
@@ -99,7 +91,7 @@ export async function PUT(request: Request) {
 
     if (clientName) updateData.clientName = clientName;
     if (partySize) updateData.partySize = partySize;
-    if (date) updateData.date = new Date(date);
+    if (date) updateData.date = new Date(date); // Convertir la fecha en un objeto Date
     if (status) updateData.status = status;
 
     const updatedReservation = await prisma.reservation.update({
@@ -109,6 +101,8 @@ export async function PUT(request: Request) {
 
     return NextResponse.json(updatedReservation);
   } catch (error) {
+    console.error("Error al actualizar la reserva:", error);
+
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(
@@ -116,12 +110,9 @@ export async function PUT(request: Request) {
           { status: 404 }
         );
       }
+      return NextResponse.json({ message: error.message }, { status: 500 });
     }
 
-    console.error("Error al actualizar la reserva:", error);
-    return NextResponse.json(
-      { message: "Error al actualizar la reserva" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Error inesperado al actualizar la reserva" }, { status: 500 });
   }
 }

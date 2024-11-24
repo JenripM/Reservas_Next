@@ -2,18 +2,21 @@
   "name": "reservas_restaurante",
   "version": "0.1.0",
   "private": true,
+  
   "scripts": {
     "dev": "next dev",
     "prisma:generate": "prisma generate",
     "build": "npm run prisma:generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "import-data": "ts-node src/importData.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/node": "^20",
