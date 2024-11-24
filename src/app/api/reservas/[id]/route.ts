@@ -3,25 +3,26 @@ import { prisma } from '@/libs/prisma';
 import { Prisma } from "@prisma/client";
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const { id } = params; // Accedemos al parámetro 'id' directamente de 'params'
-
-  try {
-    const reserva = await prisma.reservation.findFirst({
-      where: {
-        id: Number(id), // Convertimos el ID a número
-      },
-    });
-
-    return NextResponse.json(reserva);
-  } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json(
-        { message: error.message },
-        { status: 500 }
-      );
+    const { id } = params; // Accedemos al parámetro 'id' directamente de 'params'
+  
+    try {
+      const reserva = await prisma.reservation.findFirst({
+        where: {
+          id: Number(id), // Convertimos el ID a número
+        },
+      });
+  
+      return NextResponse.json(reserva);
+    } catch (error) {
+      if (error instanceof Error) {
+        return NextResponse.json(
+          { message: error.message },
+          { status: 500 }
+        );
+      }
     }
   }
-}
+  
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   try {
