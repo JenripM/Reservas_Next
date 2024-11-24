@@ -88,7 +88,8 @@ export async function PUT(request: Request, { params }: Params) {
         }
   
         // Construir el objeto de datos para la actualización
-        const updateData: any = {};
+        const updateData: Prisma.ReservationUpdateInput = {};  // Usamos el tipo de entrada de Prisma
+
         if (clientName) updateData.clientName = clientName;
         if (partySize) updateData.partySize = partySize;
         if (date) updateData.date = new Date(date); // Convertir la fecha a un objeto Date
@@ -118,5 +119,4 @@ export async function PUT(request: Request, { params }: Params) {
             { status: 500 }
         );
     }
-  }
-  
+}
